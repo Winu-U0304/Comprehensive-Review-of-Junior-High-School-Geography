@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中学地理 一問一答</title>
+
+<style>
+:root {
+  --main: #3978d4;
+  --main-light: #eaf2ff;
+  --bg: #f4f7fc;
+  --card: #ffffff;
+  --text: #263449;
+  --sub: #718096;
+  --border: #dce4ef;
+  --green: #20a46b;
+  --red: #e05252;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    "Yu Gothic",
+    "Meiryo",
+    sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button, select, input {
+  font: inherit;
+}
+
+header {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 18px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--main);
+}
+
+.logo span {
+  font-size: 12px;
+  display: block;
+  color: var(--sub);
+  font-weight: 500;
+  margin-top: 3px;
+}
+
+main {
+  max-width: 1100px;
+  margin: 28px auto;
+  padding: 0 18px 50px;
+}
+
+.intro {
+  background: linear-gradient(120deg, #3978d4, #69a6ef);
+  color: white;
+  padding: 28px;
+  border-radius: 18px;
+  margin-bottom: 22px;
+}
+
+.intro h1 {
+  margin: 0 0 10px;
+  font-size: 26px;
+}
+
+.intro p {
+  margin: 0;
+  opacity: .9;
+  line-height: 1.7;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: white;
+  border: 1px solid var(--border);
+  padding: 16px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.filter-item {
+  flex: 1;
+  min-width: 160px;
+}
+
+.filter-item label {
+  display: block;
+  font-size: 12px;
+  color: var(--sub);
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.filter-item select {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: white;
+  color: var(--text);
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 10px;
+  padding: 13px 6px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--sub);
+  transition: .2s;
+}
+
+.tab:hover {
+  border-color: var(--main);
+  color: var(--main);
+}
+
+.tab.active {
+  background: var(--main);
+  color: white;
+  border-color: var(--main);
+}
+
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--sub);
+}
+
+.progress {
+  height: 8px;
+  background: #e3eaf4;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.progress-inner {
+  height: 100%;
+  background: var(--main);
+  width: 0%;
+  transition: width .3s;
+}
+
+.question-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 5px 18px rgba(35, 60, 100, .04);
+}
+
+.question-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.unit-badge {
+  background: var(--main-light);
+  color: var(--main);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.question-number {
+  font-size: 13px;
+  color: var(--sub);
+}
+
+.question-text {
+  font-size: 23px;
+  font-weight: bold;
+  line-height: 1.8;
+  margin: 15px 0 25px;
+  min-height: 75px;
+}
+
+.answer-area {
+  background: #f7f9fc;
+  border: 1px solid var(--border);
+  padding: 20px;
+  border-radius: 13px;
+  text-align: center;
+}
+
+.answer-label {
+  font-size: 12px;
+  color: var(--sub);
+  margin-bottom: 10px;
+}
+
+.answer-text {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--main);
+  min-height: 36px;
+}
+
+.answer-hidden {
+  filter: blur(8px);
+  user-select: none;
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(.97);
+}
+
+.btn-primary {
+  background: var(--main);
+  color: white;
+}
+
+.btn-secondary {
+  background: #edf1f7;
+  color: var(--text);
+}
+
+.btn-green {
+  background: #e3f7ed;
+  color: var(--green);
+}
+
+.btn-red {
+  background: #fff0f0;
+  color: var(--red);
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.option {
+  padding: 16px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 11px;
+  cursor: pointer;
+  text-align: left;
+  font-weight: bold;
+  transition: .2s;
+}
+
+.option:hover:not(:disabled) {
+  border-color: var(--main);
+  background: var(--main-light);
+}
+
+.option.correct {
+  background: #e4f8ed;
+  border-color: var(--green);
+  color: #137d4d;
+}
+
+.option.wrong {
+  background: #fff0f0;
+  border-color: var(--red);
+  color: #c23b3b;
+}
+
+.option:disabled {
+  cursor: default;
+}
+
+.feedback {
+  display: none;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 12px;
+  line-height: 1.7;
+  font-weight: bold;
+}
+
+.feedback.correct {
+  display: block;
+  background: #e4f8ed;
+  color: #137d4d;
+}
+
+.feedback.wrong {
+  display: block;
+  background: #fff0f0;
+  color: #c23b3b;
+}
+
+.answer-input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 18px;
+  outline: none;
+  margin: 10px 0;
+}
+
+.answer-input:focus {
+  border-color: var(--main);
+}
+
+.table-container {
+  overflow-x: auto;
+  background: white;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 500px;
+}
+
+th, td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.6;
+}
+
+th {
+  background: #f2f6fc;
+  color: var(--sub);
+  font-size: 13px;
+}
+
+td {
+  font-size: 14px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.summary-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 20px;
+}
+
+.summary-card h3 {
+  color: var(--main);
+  margin: 0 0 10px;
+  font-size: 17px;
+}
+
+.summary-card p {
+  margin: 0;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px 15px;
+  color: var(--sub);
+}
+
+.hidden {
+  display: none !important;
+}
+
+footer {
+  text-align: center;
+  color: var(--sub);
+  font-size: 12px;
+  padding: 25px;
+}
+
+@media(max-width: 650px) {
+  header {
+    padding: 14px;
+  }
+
+  main {
+    padding: 0 12px 35px;
+    margin-top: 18px;
+  }
+
+  .intro {
+    padding: 22px;
+  }
+
+  .intro h1 {
+    font-size: 22px;
+  }
+
+  .tabs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tab {
+    font-size: 12px;
+    padding: 12px 4px;
+  }
+
+  .question-card {
+    padding: 18px;
+  }
+
+  .question-text {
+    font-size: 19px;
+  }
+
+  .options {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .answer-text {
+    font-size: 21px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      📘 中学地理 一問一答
+      <span>定期テスト対策・重要語句チェック</span>
+    </div>
+    <button class="btn btn-secondary" onclick="resetProgress()">
+      ↻ リセット
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <section class="intro">
+    <h1>地理をマスターしよう！</h1>
+    <p>
+      中学1・2年生の重要語句を一問一答形式で学習できるサイト。<br>
+      自分に合った学習モードで、効率よく復習しよう！
+    </p>
+  </section>
+
+  <section class="filters">
+
+    <div class="filter-item">
+      <label>学年</label>
+      <select id="gradeFilter" onchange="changeFilter()">
+        <option value="all">すべての学年</option>
+        <option value="1年生">1年生</option>
+        <option value="2年生">2年生</option>
+      </select>
+    </div>
+
+    <div class="filter-item">
+      <label>単元</label>
+      <select id="unitFilter" onchange="changeFilter()">
+        <option value="all">すべての単元</option>
+      </select>
+    </div>
+
+    <div class="filter-item">
+      <label>出題順</label>
+      <select id="orderFilter" onchange="changeOrder()">
+        <option value="normal">登録順</option>
+        <option value="random">ランダム</option>
+      </select>
+    </div>
+
+  </section>
+
+  <section class="tabs">
+    <button class="tab active" onclick="changeMode('red',this)">
+      🔴 赤シート
+    </button>
+
+    <button class="tab" onclick="changeMode('choice',this)">
+      📝 選択問題
+    </button>
+
+    <button class="tab" onclick="changeMode('input',this)">
+      ✏️ 記入問題
+    </button>
+
+    <button class="tab" onclick="changeMode('table',this)">
+      📋 答え一覧
+    </button>
+
+    <button class="tab" onclick="changeMode('summary',this)">
+      📖 地域調査
+    </button>
+  </section>
+
+  <section id="studyArea">
+
+    <div class="status-bar">
+      <span id="questionCounter">問題 1 / 1</span>
+      <span id="scoreDisplay">正解数：0</span>
+    </div>
+
+    <div class="progress">
+      <div class="progress-inner" id="progressInner"></div>
+    </div>
+
+    <div class="question-card">
+
+      <div class="question-meta">
+        <span class="unit-badge" id="unitBadge">単元</span>
+        <span class="question-number" id="questionNumber">第1問</span>
+      </div>
+
+      <div class="question-text" id="questionText">
+        問題を読み込み中...
+      </div>
+
+      <!-- 赤シートモード -->
+      <div id="redMode">
+
+        <div class="answer-area">
+          <div class="answer-label">答え</div>
+          <div class="answer-text answer-hidden" id="redAnswer">
+            答え
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-primary" onclick="toggleAnswer()">
+            答えを表示
+          </button>
+        </div>
+
+      </div>
+
+      <!-- 選択問題モード -->
+      <div id="choiceMode" class="hidden">
+
+        <div class="options" id="optionsArea"></div>
+
+        <div class="feedback" id="choiceFeedback"></div>
+
+      </div>
+
+      <!-- 記入問題モード -->
+      <div id="inputMode" class="hidden">
+
+        <input
+          type="text"
+          class="answer-input"
+          id="answerInput"
+          placeholder="答えを入力..."
+          autocomplete="off"
+        >
+
+        <div class="action-buttons">
+          <button class="btn btn-primary" onclick="checkInput()">
+            答え合わせ
+          </button>
+        </div>
+
+        <div class="feedback" id="inputFeedback"></div>
+
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-secondary" onclick="previousQuestion()">
+          ← 前の問題
+        </button>
+
+        <button class="btn btn-primary" onclick="nextQuestion()">
+          次の問題 →
+        </button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- 答え一覧 -->
+  <section id="tableArea" class="hidden">
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>番号</th>
+            <th>問題</th>
+            <th>答え</th>
+          </tr>
+        </thead>
+        <tbody id="answerTable"></tbody>
+      </table>
+    </div>
+
+  </section>
+
+  <!-- 地域調査まとめ -->
+  <section id="summaryArea" class="hidden">
+
+    <div class="summary-grid" id="summaryGrid"></div>
+
+  </section>
+
+</main>
+
+<footer>
+  中学地理 一問一答 ｜ 学習用サイト
+</footer>
+
+<script>
+const geographyQuestions = [
+  // =========================
+  // 1年生：世界の姿・日本の姿
+  // =========================
+  {
+    grade: "1年生",
+    unit: "世界の姿",
+    question: "地球上の海と陸のうち、面積が大きいのはどちらか。",
+    answer: "海"
+  },
+  {
+    grade: "1年生",
+    unit: "世界の姿",
+    question: "地球上の陸地を大きく6つに分けたものを何というか。",
+    answer: "六大陸"
+  },
+  {
+    grade: "1年生",
+    unit: "世界の姿",
+    question: "地球上の海を大きく3つに分けたものを何というか。",
+    answer: "三大洋"
+  },
+
+  // =========================
+  // 1年生：人々の生活と環境
+  // =========================
+  {
+    grade: "1年生",
+    unit: "人々の生活と環境",
+    question: "赤道付近に広がり、一年中高温で雨が多い気候帯は何か。",
+    answer: "熱帯"
+  },
+  {
+    grade: "1年生",
+    unit: "人々の生活と環境",
+    question: "一年を通して気温が低く、寒さが厳しい気候帯は何か。",
+    answer: "寒帯"
+  },
+
+  // =========================
+  // 2年生：地域調査の手法
+  // =========================
+  {
+    grade: "2年生",
+    unit: "地域調査の手法",
+    type: "summary",
+    title: "地域調査の基本",
+    points: [
+      "観察：実際に地域を見て、特徴や変化を調べること。",
+      "仮説：調査を始める前に立てる予想や考え。",
+      "国土地理院：地図や空中写真などを作成・提供する機関。",
+      "地形図：土地の高さや地形、土地利用などを表した地図。",
+      "縮尺：地図上の距離と実際の距離の比。",
+      "等高線：同じ高さの地点を結んだ線。",
+      "文献調査：本や資料、インターネットなどを使って調べる方法。",
+      "野外観察：実際に現地へ行き、地域の様子を観察する方法。",
+      "聞き取り調査：地域の人などに質問して情報を集める方法。",
+      "調査計画書：調査の目的や方法、予定などをまとめたもの。",
+      "フィールドマップ：現地で気づいたことを書き込む地図。",
+      "ルートマップ：調査で移動する道筋を示した地図。",
+      "土地利用：土地が住宅地・農地・工業地などに使われること。",
+      "根拠：自分の考えや結論を裏付ける事実や資料。"
+    ]
+  },
+
+  // =========================
+  // 2年生：日本の地域的特色
+  // =========================
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "地震や火山活動が活発な地帯を何というか。",
+    answer: "変動帯"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "飛騨山脈・木曽山脈・赤石山脈をまとめて何というか。",
+    answer: "日本アルプス"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "本州中央部を南北に走る大きな地質上の境界を何というか。",
+    answer: "フォッサマグナ"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "川が山地から平地に出たところにできる扇形の地形は何か。",
+    answer: "扇状地"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "川が河口付近に土砂を積もらせてできる低く平らな地形は何か。",
+    answer: "三角州"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "山地が海に沈み、複雑な海岸線になった地形は何か。",
+    answer: "リアス海岸"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "海の中で陸地に近い、比較的浅い海底のことを何というか。",
+    answer: "大陸棚"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "日本の太平洋側を北上する暖流は何か。",
+    answer: "黒潮"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "日本の東北地方の太平洋側に流れる寒流は何か。",
+    answer: "親潮"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "暖流と寒流がぶつかる海域を何というか。",
+    answer: "潮目"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "冬に日本海側で雪が多くなる原因となる風は何か。",
+    answer: "季節風"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "6月ごろから続く、雨が降りやすい時期を何というか。",
+    answer: "梅雨"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "夏から秋にかけて日本に接近する強い熱帯低気圧は何か。",
+    answer: "台風"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "地震などによって地盤が液体のようになる現象は何か。",
+    answer: "液状化"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "地震によって発生し、海岸に大きな被害をもたらす波は何か。",
+    answer: "津波"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "災害による被害をできるだけ少なくする取り組みを何というか。",
+    answer: "減災"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "災害時に自分自身の身を守ることを何というか。",
+    answer: "自助"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "地域の人々が互いに助け合うことを何というか。",
+    answer: "共助"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "国や自治体などの公的機関による支援を何というか。",
+    answer: "公助"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "災害による危険な場所や避難先を示した地図は何か。",
+    answer: "ハザードマップ"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "東京・大阪・名古屋を中心とする三つの大都市圏を何というか。",
+    answer: "三大都市圏"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "都市に人口や施設が集中しすぎる問題を何というか。",
+    answer: "過密"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "都市の中心部の人口が減り、郊外の人口が増える現象は何か。",
+    answer: "ドーナツ化現象"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "都市の中心部で人口が再び増加する現象を何というか。",
+    answer: "都心回帰"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "人口が減少し、地域の活力が低下していくことを何というか。",
+    answer: "過疎"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "高齢者の割合が増え、子どもの割合が減ることを何というか。",
+    answer: "少子高齢化"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "日本で使われるエネルギーのうち、国内でまかなえる割合は何か。",
+    answer: "エネルギー自給率"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "希少で、ハイテク製品などに使われる金属を何というか。",
+    answer: "レアメタル"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "太陽光や風力など、自然の力を利用するエネルギーは何か。",
+    answer: "再生可能エネルギー"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "日本の工業が太平洋側に帯状に集まる地域を何というか。",
+    answer: "太平洋ベルト"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "情報通信技術をアルファベット3文字で何というか。",
+    answer: "ICT"
+  },
+  {
+    grade: "2年生",
+    unit: "日本の地域的特色",
+    question: "国内の工場が海外へ移転し、国内の工業が衰える現象は何か。",
+    answer: "産業の空洞化"
+  },
+
+  // =========================
+  // 2年生：九州地方
+  // =========================
+  {
+    grade: "2年生",
+    unit: "九州地方",
+    question: "火山の噴火によってできた大きなくぼ地を何というか。",
+    answer: "カルデラ"
+  },
+  {
+    grade: "2年生",
+    unit: "九州地方",
+    question: "火山灰などが積もってできた、鹿児島県に広がる地層は何か。",
+    answer: "シラス"
+  },
+  {
+    grade: "2年生",
+    unit: "九州地方",
+    question: "暖かい南の島の海岸に見られる、石灰質の地形は何か。",
+    answer: "さんご礁"
+  },
+  {
+    grade: "2年生",
+    unit: "九州地方",
+    question: "山の斜面などで土砂が水とともに一気に流れ下る災害は何か。",
+    answer: "土石流"
+  },
+  {
+    grade: "2年生",
+    unit: "九州地方",
+    question: "森林の木を適度に切り、森の成長を助ける作業は何か。",
+    answer: "間伐"
+  },
+  {
+    grade: "2年生",
+    unit: "九州地方",
+    question: "同じ土地で一年に二種類の作物を作る農業は何か。",
+    answer: "二毛作"
+  },
+  {
+    grade: "2年生",
+    unit: "九州地方",
+    question: "温暖な気候を利用し、野菜などを早い時期に出荷する栽培方法は何か。",
+    answer: "促成栽培"
+  },
+  {
+    grade: "2年生",
+    unit: "九州地方",
+    question: "自然環境や地域の文化を守りながら楽しむ観光は何か。",
+    answer: "エコツーリズム"
+  },
+  {
+    grade: "2年生",
+    unit: "九州地方",
+    question: "工場排水などが原因で発生した公害病で、水俣市で確認された病気は何か。",
+    answer: "水俣病"
+  },
+
+  // =========================
+  // 2年生：中国・四国地方
+  // =========================
+  {
+    grade: "2年生",
+    unit: "中国・四国地方",
+    question: "中国地方の日本海側に広がる地域を何というか。",
+    answer: "山陰"
+  },
+  {
+    grade: "2年生",
+    unit: "中国・四国地方",
+    question: "中国地方と四国地方の間に広がる海に面した地域を何というか。",
+    answer: "瀬戸内"
+  },
+  {
+    grade: "2年生",
+    unit: "中国・四国地方",
+    question: "四国の太平洋側に広がる地域を何というか。",
+    answer: "南四国"
+  },
+  {
+    grade: "2年生",
+    unit: "中国・四国地方",
+    question: "雨の少ない瀬戸内地方で、農業用水をためる施設は何か。",
+    answer: "ため池"
+  },
+  {
+    grade: "2年生",
+    unit: "中国・四国地方",
+    question: "本州と四国を結ぶ橋の総称は何か。",
+    answer: "本州四国連絡橋"
+  },
+  {
+    grade: "2年生",
+    unit: "中国・四国地方",
+    question: "石油や化学製品などを生産する工場が集まった施設は何か。",
+    answer: "石油化学コンビナート"
+  },
+  {
+    grade: "2年生",
+    unit: "中国・四国地方",
+    question: "瀬戸内海沿岸に発達した工業地域は何か。",
+    answer: "瀬戸内工業地域"
+  },
+  {
+    grade: "2年生",
+    unit: "中国・四国地方",
+    question: "魚や貝などを人工的に育てて生産することを何というか。",
+    answer: "養殖"
+  },
+  {
+    grade: "2年生",
+    unit: "中国・四国地方",
+    question: "人口が減少した地域を活性化させるための活動を何というか。",
+    answer: "地域おこし"
+  },
+
+  // =========================
+  // 2年生：近畿地方
+  // =========================
+  {
+    grade: "2年生",
+    unit: "近畿地方",
+    question: "大阪を中心に広がる大都市圏を何というか。",
+    answer: "大阪大都市圏"
+  },
+  {
+    grade: "2年生",
+    unit: "近畿地方",
+    question: "多くの鉄道路線が集まり、人々が乗り換える駅を何というか。",
+    answer: "ターミナル駅"
+  },
+  {
+    grade: "2年生",
+    unit: "近畿地方",
+    question: "大阪・神戸を中心に発達した工業地帯は何か。",
+    answer: "阪神工業地帯"
+  },
+  {
+    grade: "2年生",
+    unit: "近畿地方",
+    question: "海や湖を埋め立てて新たに土地をつくることを何というか。",
+    answer: "埋め立て"
+  },
+  {
+    grade: "2年生",
+    unit: "近畿地方",
+    question: "都市の中心部などを新しく整備し直すことを何というか。",
+    answer: "再開発"
+  },
+  {
+    grade: "2年生",
+    unit: "近畿地方",
+    question: "都市の郊外に計画的につくられた住宅地を何というか。",
+    answer: "ニュータウン"
+  },
+
+  // =========================
+  // 2年生：中部地方
+  // =========================
+  {
+    grade: "2年生",
+    unit: "中部地方",
+    question: "中部地方を大きく三つに分けたとき、太平洋側の地域は何か。",
+    answer: "東海"
+  },
+  {
+    grade: "2年生",
+    unit: "中部地方",
+    question: "中部地方の内陸に広がる山地や盆地の地域は何か。",
+    answer: "中央高地"
+  },
+  {
+    grade: "2年生",
+    unit: "中部地方",
+    question: "中部地方の日本海側に広がる地域は何か。",
+    answer: "北陸"
+  },
+  {
+    grade: "2年生",
+    unit: "中部地方",
+    question: "愛知県を中心に広がる大都市圏は何か。",
+    answer: "名古屋大都市圏"
+  },
+  {
+    grade: "2年生",
+    unit: "中部地方",
+    question: "愛知県などに広がる工業地域は何か。",
+    answer: "東海工業地域"
+  },
+  {
+    grade: "2年生",
+    unit: "中部地方",
+    question: "温室やビニールハウスを利用して農作物を育てる農業は何か。",
+    answer: "施設園芸農業"
+  },
+  {
+    grade: "2年生",
+    unit: "中部地方",
+    question: "標高の高い地域で、涼しい気候を利用して育てる野菜は何か。",
+    answer: "高原野菜"
+  },
+  {
+    grade: "2年生",
+    unit: "中部地方",
+    question: "地域で昔から受け継がれてきた産業を何というか。",
+    answer: "地場産業"
+  },
+  {
+    grade: "2年生",
+    unit: "中部地方",
+    question: "通常より早い時期に収穫・出荷される米を何というか。",
+    answer: "早場米"
+  },
+  {
+    grade: "2年生",
+    unit: "中部地方",
+    question: "よりよい性質を持つ農作物を作るために品種を改良することは何か。",
+    answer: "品種改良"
+  },
+
+  // =========================
+  // 2年生：関東地方
+  // =========================
+  {
+    grade: "2年生",
+    unit: "関東地方",
+    question: "関東平野に広く分布する赤土を何というか。",
+    answer: "関東ローム"
+  },
+  {
+    grade: "2年生",
+    unit: "関東地方",
+    question: "東京を中心に広がる大都市圏は何か。",
+    answer: "東京大都市圏"
+  },
+  {
+    grade: "2年生",
+    unit: "関東地方",
+    question: "冬に関東地方で吹く、乾燥した冷たい北西風を何というか。",
+    answer: "からっ風"
+  },
+  {
+    grade: "2年生",
+    unit: "関東地方",
+    question: "都市部の気温が周辺地域より高くなる現象は何か。",
+    answer: "ヒートアイランド現象"
+  },
+  {
+    grade: "2年生",
+    unit: "関東地方",
+    question: "国の政治や行政の中心となる都市を何というか。",
+    answer: "首都"
+  },
+  {
+    grade: "2年生",
+    unit: "関東地方",
+    question: "昼間にその地域にいる人の数を何というか。",
+    answer: "昼間人口"
+  },
+  {
+    grade: "2年生",
+    unit: "関東地方",
+    question: "夜間にその地域に住んでいる人の数を何というか。",
+    answer: "夜間人口"
+  },
+  {
+    grade: "2年生",
+    unit: "関東地方",
+    question: "東京都心の周辺にある、業務や商業の中心となる地区は何か。",
+    answer: "副都心"
+  },
+  {
+    grade: "2年生",
+    unit: "関東地方",
+    question: "東京湾沿岸に発達した工業地帯は何か。",
+    answer: "京浜工業地帯"
+  },
+  {
+    grade: "2年生",
+    unit: "関東地方",
+    question: "東京湾の千葉県側に広がる工業地域は何か。",
+    answer: "京葉工業地域"
+  },
+  {
+    grade: "2年生",
+    unit: "関東地方",
+    question: "北関東に広がる工業地域は何か。",
+    answer: "北関東工業地域"
+  },
+  {
+    grade: "2年生",
+    unit: "関東地方",
+    question: "大都市の近くで、野菜などを生産して出荷する農業は何か。",
+    answer: "近郊農業"
+  },
+
+  // =========================
+  // 2年生：東北地方
+  // =========================
+  {
+    grade: "2年生",
+    unit: "東北地方",
+    question: "りんごやさくらんぼなどの果物を育てる農業は何か。",
+    answer: "果樹栽培"
+  },
+  {
+    grade: "2年生",
+    unit: "東北地方",
+    question: "東北地方の太平洋側で、夏に吹く冷たく湿った風は何か。",
+    answer: "やませ"
+  },
+  {
+    grade: "2年生",
+    unit: "東北地方",
+    question: "地域に伝わる芸能や祭りなどのうち、国が指定する文化財は何か。",
+    answer: "重要無形民俗文化財"
+  },
+  {
+    grade: "2年生",
+    unit: "東北地方",
+    question: "昔から地域に伝わる技術や方法で作られる工芸品は何か。",
+    answer: "伝統的工芸品"
+  },
+  {
+    grade: "2年生",
+    unit: "東北地方",
+    question: "2011年に東北地方の太平洋沖で発生した大地震は何か。",
+    answer: "東北地方太平洋沖地震"
+  },
+  {
+    grade: "2年生",
+    unit: "東北地方",
+    question: "2011年の地震と津波によって発生した大きな災害は何か。",
+    answer: "東日本大震災"
+  },
+
+  // =========================
+  // 2年生：北海道地方
+  // =========================
+  {
+    grade: "2年生",
+    unit: "北海道地方",
+    question: "北海道の中央部から西部にかけて広がる平野は何か。",
+    answer: "石狩平野"
+  },
+  {
+    grade: "2年生",
+    unit: "北海道地方",
+    question: "北海道の南東部に広がる、畑作や酪農が盛んな平野は何か。",
+    answer: "十勝平野"
+  },
+  {
+    grade: "2年生",
+    unit: "北海道地方",
+    question: "北海道に暮らしてきた先住民族は何か。",
+    answer: "アイヌの人々"
+  },
+  {
+    grade: "2年生",
+    unit: "北海道地方",
+    question: "水はけが悪く、農業に利用するために改良が必要な土地は何か。",
+    answer: "泥炭地"
+  },
+  {
+    grade: "2年生",
+    unit: "北海道地方",
+    question: "同じ土地で複数の作物を順番に作る農業の方法は何か。",
+    answer: "輪作"
+  },
+  {
+    grade: "2年生",
+    unit: "北海道地方",
+    question: "牛を飼育し、牛乳などを生産する農業は何か。",
+    answer: "酪農"
+  },
+  {
+    grade: "2年生",
+    unit: "北海道地方",
+    question: "地域の農産物などに独自の価値を持たせて売り出すことは何か。",
+    answer: "ブランド化"
+  },
+  {
+    grade: "2年生",
+    unit: "北海道地方",
+    question: "自然環境を守りながら観光を行う取り組みは何か。",
+    answer: "エコツーリズム"
+  }
+];
+// ==============================
+// 基本設定
+// ==============================
+
+let currentMode = "red";
+let currentIndex = 0;
+
+let filteredQuestions = [];
+let answeredQuestions = new Set();
+
+let correctCount = 0;
+let answerVisible = false;
+let alreadyAnswered = false;
+
+const summaryData = [
+  {
+    title: "① 観察と仮説",
+    text: "地域調査では、まず実際の地域の様子を観察する。観察したことをもとに疑問を見つけ、調査する前に予想や考えである仮説を立てる。"
+  },
+  {
+    title: "② 地図と資料の活用",
+    text: "国土地理院が発行する地形図などを利用する。縮尺を使うと実際の距離を求められ、等高線から土地の高さや地形を読み取ることができる。"
+  },
+  {
+    title: "③ 文献調査",
+    text: "本や新聞、統計資料、インターネットなどを利用して情報を集める。複数の資料を比べ、情報が正しいか確認することが大切。"
+  },
+  {
+    title: "④ 野外観察",
+    text: "実際に地域へ出かけ、土地の様子や建物、交通、土地利用などを観察する。現地でしか分からない情報を集められる。"
+  },
+  {
+    title: "⑤ 聞き取り調査",
+    text: "地域の人々や関係者に質問し、地域の歴史や暮らし、問題点などを調べる。質問内容を事前に考えておくとよい。"
+  },
+  {
+    title: "⑥ 調査計画書",
+    text: "調査の目的、調査方法、調査場所、日程などを整理して計画を立てる。フィールドマップやルートマップも活用する。"
+  },
+  {
+    title: "⑦ 根拠を示す",
+    text: "調査結果をまとめるときは、地図や写真、統計などの資料を根拠として示す。自分の考えだけで結論を出さないことが大切。"
+  }
+];
+
+// ==============================
+// 問題データの取得
+// ==============================
+
+function getQuestions() {
+  return geographyQuestions.filter(q => q.question && q.answer);
+}
+
+function getUnits() {
+  const grade = document.getElementById("gradeFilter").value;
+
+  const units = [...new Set(
+    geographyQuestions
+      .filter(q => q.question && q.answer)
+      .filter(q => grade === "all" || q.grade === grade)
+      .map(q => q.unit)
+  )];
+
+  return units;
+}
+
+// ==============================
+// フィルター
+// ==============================
+
+function updateUnitOptions() {
+  const select = document.getElementById("unitFilter");
+  const previous = select.value;
+
+  const units = getUnits();
+
+  select.innerHTML = '<option value="all">すべての単元</option>';
+
+  units.forEach(unit => {
+    const option = document.createElement("option");
+    option.value = unit;
+    option.textContent = unit;
+    select.appendChild(option);
+  });
+
+  if (units.includes(previous)) {
+    select.value = previous;
+  }
+}
+
+// ==============================
+// フィルター修正版
+// ==============================
+
+function changeFilter() {
+  // 学年を変更したら単元もリセット
+  document.getElementById("unitFilter").value = "all";
+
+  updateUnitOptions();
+
+  currentIndex = 0;
+  answeredQuestions.clear();
+  correctCount = 0;
+
+  prepareQuestions();
+}
+
+function prepareQuestions() {
+  const grade = document.getElementById("gradeFilter").value;
+  const unit = document.getElementById("unitFilter").value;
+  const order = document.getElementById("orderFilter").value;
+
+  // 問題データから学年・単元が一致するものだけ取得
+  filteredQuestions = geographyQuestions.filter(q => {
+
+    if (!q.question || !q.answer) return false;
+
+    const gradeMatch =
+      grade === "all" || String(q.grade).trim() === grade;
+
+    const unitMatch =
+      unit === "all" || String(q.unit).trim() === unit;
+
+    return gradeMatch && unitMatch;
+  });
+
+  // ランダム出題
+  if (order === "random") {
+    filteredQuestions = [...filteredQuestions].sort(
+      () => Math.random() - 0.5
+    );
+  }
+
+  currentIndex = 0;
+  answerVisible = false;
+  alreadyAnswered = false;
+
+  updateDisplay();
+}
+
+// ==============================
+// モード切り替え
+// ==============================
+
+function changeMode(mode, button) {
+  currentMode = mode;
+
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.classList.remove("active");
+  });
+
+  button.classList.add("active");
+
+  document.getElementById("studyArea").classList.add("hidden");
+  document.getElementById("tableArea").classList.add("hidden");
+  document.getElementById("summaryArea").classList.add("hidden");
+
+  if (mode === "table") {
+    document.getElementById("tableArea").classList.remove("hidden");
+    createAnswerTable();
+    return;
+  }
+
+  if (mode === "summary") {
+    document.getElementById("summaryArea").classList.remove("hidden");
+    createSummary();
+    return;
+  }
+
+  document.getElementById("studyArea").classList.remove("hidden");
+
+  document.getElementById("redMode").classList.toggle(
+    "hidden", mode !== "red"
+  );
+
+  document.getElementById("choiceMode").classList.toggle(
+    "hidden", mode !== "choice"
+  );
+
+  document.getElementById("inputMode").classList.toggle(
+    "hidden", mode !== "input"
+  );
+
+  updateDisplay();
+}
+
+// ==============================
+// 問題表示
+// ==============================
+
+function updateDisplay() {
+  if (filteredQuestions.length === 0) {
+    document.getElementById("questionText").textContent =
+      "この条件に該当する問題はありません。";
+
+    document.getElementById("questionCounter").textContent =
+      "問題 0 / 0";
+
+    document.getElementById("unitBadge").textContent =
+      "問題なし";
+
+    document.getElementById("questionNumber").textContent = "";
+
+    document.getElementById("redAnswer").textContent = "";
+
+    document.getElementById("progressInner").style.width = "0%";
+
+    document.getElementById("optionsArea").innerHTML = "";
+
+    document.getElementById("choiceFeedback").className = "feedback";
+    document.getElementById("inputFeedback").className = "feedback";
+
+    return;
+  }
+
+  if (currentIndex >= filteredQuestions.length) {
+    currentIndex = 0;
+  }
+
+  const q = filteredQuestions[currentIndex];
+
+  answerVisible = false;
+  alreadyAnswered = false;
+
+  document.getElementById("questionText").textContent = q.question;
+
+  document.getElementById("unitBadge").textContent = q.unit;
+
+  document.getElementById("questionNumber").textContent =
+    "第" + (currentIndex + 1) + "問";
+
+  document.getElementById("questionCounter").textContent =
+    "問題 " + (currentIndex + 1) +
+    " / " + filteredQuestions.length;
+
+  document.getElementById("scoreDisplay").textContent =
+    "正解数：" + correctCount;
+
+  document.getElementById("progressInner").style.width =
+    ((currentIndex + 1) / filteredQuestions.length * 100) + "%";
+
+  document.getElementById("redAnswer").textContent = q.answer;
+
+  document.getElementById("redAnswer").classList.add("answer-hidden");
+
+  document.querySelector("#redMode .btn-primary").textContent =
+    "答えを表示";
+
+  document.getElementById("choiceFeedback").className = "feedback";
+  document.getElementById("inputFeedback").className = "feedback";
+
+  document.getElementById("answerInput").value = "";
+
+  if (currentMode === "choice") {
+    createChoices();
+  }
+
+  updateScore();
+}
+
+// ==============================
+// 赤シート
+// ==============================
+
+function toggleAnswer() {
+  answerVisible = !answerVisible;
+
+  const answer = document.getElementById("redAnswer");
+
+  answer.classList.toggle("answer-hidden", !answerVisible);
+
+  document.querySelector("#redMode .btn-primary").textContent =
+    answerVisible ? "答えを隠す" : "答えを表示";
+}
+
+// ==============================
+// 選択問題
+// ==============================
+
+function createChoices() {
+  const q = filteredQuestions[currentIndex];
+
+  const optionsArea = document.getElementById("optionsArea");
+
+  const answers = [...new Set(
+    getQuestions()
+      .map(item => item.answer)
+      .filter(answer => answer !== q.answer)
+  )];
+
+  const wrongAnswers = answers
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 3);
+
+  const choices = [...wrongAnswers, q.answer]
+    .sort(() => Math.random() - 0.5);
+
+  optionsArea.innerHTML = "";
+
+  choices.forEach((choice, index) => {
+    const button = document.createElement("button");
+
+    button.className = "option";
+    button.textContent =
+      String.fromCharCode(65 + index) + ". " + choice;
+
+    button.onclick = () => checkChoice(choice, button);
+
+    optionsArea.appendChild(button);
+  });
+}
+
+function checkChoice(selected, button) {
+  if (alreadyAnswered) return;
+
+  alreadyAnswered = true;
+
+  const q = filteredQuestions[currentIndex];
+
+  const correct = selected === q.answer;
+
+  if (correct) {
+    correctCount++;
+    button.classList.add("correct");
+    showFeedback(
+      "choiceFeedback",
+      true,
+      "正解！ 答えは「" + q.answer + "」"
+    );
+  } else {
+    button.classList.add("wrong");
+
+    showFeedback(
+      "choiceFeedback",
+      false,
+      "不正解！ 正解は「" + q.answer + "」"
+    );
+  }
+
+  document.querySelectorAll(".option").forEach(option => {
+    option.disabled = true;
+
+    if (option.textContent.endsWith(q.answer)) {
+      option.classList.add("correct");
+    }
+  });
+
+  markAnswered();
+  updateScore();
+}
+
+// ==============================
+// 記入問題
+// ==============================
+
+function normalizeAnswer(value) {
+  return value
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/\s/g, "")
+    .replace(/[。、・,，.．!！?？]/g, "");
+}
+
+function checkInput() {
+  if (alreadyAnswered) return;
+
+  const q = filteredQuestions[currentIndex];
+
+  const input = document.getElementById("answerInput").value;
+
+  if (!input.trim()) {
+    alert("答えを入力してね！");
+    return;
+  }
+
+  alreadyAnswered = true;
+
+  const correct =
+    normalizeAnswer(input) === normalizeAnswer(q.answer);
+
+  if (correct) {
+    correctCount++;
+
+    showFeedback(
+      "inputFeedback",
+      true,
+      "正解！ 答えは「" + q.answer + "」"
+    );
+  } else {
+    showFeedback(
+      "inputFeedback",
+      false,
+      "不正解！ 正解は「" + q.answer + "」"
+    );
+  }
+
+  markAnswered();
+  updateScore();
+}
+
+document.getElementById("answerInput").addEventListener(
+  "keydown",
+  event => {
+    if (event.key === "Enter") {
+      checkInput();
+    }
+  }
+);
+
+// ==============================
+// 正誤表示
+// ==============================
+
+function showFeedback(id, correct, message) {
+  const element = document.getElementById(id);
+
+  element.className =
+    "feedback " + (correct ? "correct" : "wrong");
+
+  element.textContent = message;
+}
+
+function markAnswered() {
+  answeredQuestions.add(currentIndex);
+}
+
+function updateScore() {
+  document.getElementById("scoreDisplay").textContent =
+    "正解数：" + correctCount;
+}
+
+// ==============================
+// 前後移動
+// ==============================
+
+function nextQuestion() {
+  if (filteredQuestions.length === 0) return;
+
+  currentIndex++;
+
+  if (currentIndex >= filteredQuestions.length) {
+    currentIndex = 0;
+  }
+
+  updateDisplay();
+}
+
+function previousQuestion() {
+  if (filteredQuestions.length === 0) return;
+
+  currentIndex--;
+
+  if (currentIndex < 0) {
+    currentIndex = filteredQuestions.length - 1;
+  }
+
+  updateDisplay();
+}
+
+// ==============================
+// 答え一覧
+// ==============================
+
+function createAnswerTable() {
+  const tbody = document.getElementById("answerTable");
+
+  tbody.innerHTML = "";
+
+  filteredQuestions.forEach((q, index) => {
+    const tr = document.createElement("tr");
+
+    const number = document.createElement("td");
+    const question = document.createElement("td");
+    const answer = document.createElement("td");
+
+    number.textContent = index + 1;
+    question.textContent = q.question;
+    answer.textContent = q.answer;
+
+    tr.appendChild(number);
+    tr.appendChild(question);
+    tr.appendChild(answer);
+
+    tbody.appendChild(tr);
+  });
+
+  if (filteredQuestions.length === 0) {
+    tbody.innerHTML =
+      '<tr><td colspan="3" class="empty">問題がありません。</td></tr>';
+  }
+}
+
+// ==============================
+// 地域調査まとめ
+// ==============================
+
+function createSummary() {
+  const grid = document.getElementById("summaryGrid");
+
+  grid.innerHTML = "";
+
+  summaryData.forEach(item => {
+    const card = document.createElement("div");
+
+    card.className = "summary-card";
+
+    const title = document.createElement("h3");
+    const text = document.createElement("p");
+
+    title.textContent = item.title;
+    text.textContent = item.text;
+
+    card.appendChild(title);
+    card.appendChild(text);
+
+    grid.appendChild(card);
+  });
+}
+
+// ==============================
+// リセット
+// ==============================
+
+function resetProgress() {
+  if (!confirm("学習状況をリセットする？")) return;
+
+  currentIndex = 0;
+  correctCount = 0;
+
+  answeredQuestions.clear();
+
+  updateDisplay();
+}
+
+// ==============================
+// 起動処理
+// ==============================
+
+updateUnitOptions();
+prepareQuestions();
+
+</script>
+
+</body>
+</html>
